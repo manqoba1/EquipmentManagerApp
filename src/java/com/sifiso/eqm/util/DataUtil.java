@@ -7,7 +7,9 @@ package com.sifiso.eqm.util;
 
 import com.sfiso.eqm.dto.EquipmentDTO;
 import com.sfiso.eqm.dto.InventoryDTO;
+import com.sfiso.eqm.dto.OrganisationDTO;
 import com.sfiso.eqm.dto.ResponseDTO;
+import com.sfiso.eqm.dto.UserDTO;
 import com.sfiso.eqm.dto.UserinventoryDTO;
 import com.sifiso.eqm.data.Consultant;
 import com.sifiso.eqm.data.Consultantorganisation;
@@ -115,6 +117,86 @@ public class DataUtil {
         return resp;
     }
 
+    public static ResponseDTO addUser(UserDTO dto) throws DataException {
+        em = EMUtil.getEntityManager();
+        ResponseDTO resp = new ResponseDTO();
+        EntityTransaction en = em.getTransaction();
+        en.begin();
+        User e = new User();
+        e.setUserName(dto.getUserName());
+        e.setUserSurname(dto.getUserSurname());
+        e.setUserEmaill(dto.getUserEmaill());
+        e.setUserTel(dto.getUserTel());
+        e.setUserStatus(1);
+        e.setOrganisation(getOrganisation(dto.getOrganisationID()));
+
+        try {
+            em.persist(e);
+            en.commit();
+        } catch (ConstraintViolationException ex) {
+            throw new DataException(DataException.DUPLICATE);
+        } catch (IllegalStateException ex) {
+            throw new DataException(DataException.ILLEGAL_STATE);
+        } catch (Exception ex) {
+            throw new DataException(DataException.UNKNOWN_ERROR);
+        } finally {
+            if (en.isActive()) {
+                en.rollback();
+            }
+            em.close();
+        }
+        return resp;
+    }
+
+    public static ResponseDTO addOrganisation(OrganisationDTO dto) throws DataException {
+        em = EMUtil.getEntityManager();
+        ResponseDTO resp = new ResponseDTO();
+        EntityTransaction en = em.getTransaction();
+        en.begin();
+        Organisation e = new Organisation();
+        e.setOrganisationName(dto.getOrganisationName());
+        e.setOrganisationAddress(dto.getOrganisationAddress());
+        e.setContactname(dto.getContactname());
+        e.setLatitude(dto.getLatitude());
+        e.setLongitude(dto.getLongitude());
+
+        try {
+            em.persist(e);
+            en.commit();
+        } catch (ConstraintViolationException ex) {
+            throw new DataException(DataException.DUPLICATE);
+        } catch (IllegalStateException ex) {
+            throw new DataException(DataException.ILLEGAL_STATE);
+        } catch (Exception ex) {
+            throw new DataException(DataException.UNKNOWN_ERROR);
+        } finally {
+            if (en.isActive()) {
+                en.rollback();
+            }
+            em.close();
+        }
+        return resp;
+    }
+
+    public static List<UserinventoryDTO> getUserinventoryDTOs() throws DataException {
+        em = EMUtil.getEntityManager();
+        List<UserinventoryDTO> userinventoryDTOs = new ArrayList<>();
+        try {
+            Query q = em.createNamedQuery("Userinventory.findAll");
+            List<Userinventory> in = q.getResultList();
+            for (Userinventory i : in) {
+                userinventoryDTOs.add(new UserinventoryDTO(i));
+            }
+        } catch (ConstraintViolationException ex) {
+            throw new DataException(DataException.DUPLICATE);
+        } catch (IllegalStateException ex) {
+            throw new DataException(DataException.ILLEGAL_STATE);
+        } catch (Exception ex) {
+            throw new DataException(DataException.UNKNOWN_ERROR);
+        }
+        return userinventoryDTOs;
+    }
+
     public static ResponseDTO getAllEquipments() throws DataException {
         em = EMUtil.getEntityManager();
         ResponseDTO resp = new ResponseDTO();
@@ -132,7 +214,7 @@ public class DataUtil {
                         equipmentDTO.getInventoryList().add(inventoryDTOs.get(i));
                     }
                 }
-                equipmentDTOs.add(equipmentDTO);                
+                equipmentDTOs.add(equipmentDTO);
             }
             resp.setEquipmentDTOs(equipmentDTOs);
 
