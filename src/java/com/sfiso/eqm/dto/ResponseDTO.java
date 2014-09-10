@@ -24,10 +24,12 @@ public class ResponseDTO {
     private EquipmentDTO equipmentDTO;
     private InventoryDTO inventoryDTO;
     private UserinventoryDTO userinventoryDTO;
+    private UserDTO userDTO;
 
     private List<EquipmentDTO> equipmentDTOs;
     private List<InventoryDTO> inventoryDTOs;
     private List<UserinventoryDTO> userinventoryDTOs;
+    private List<UserDTO> userDTOs;
 
     public int getStatusCode() {
         return statusCode;
@@ -67,6 +69,22 @@ public class ResponseDTO {
 
     public void setUserinventoryDTO(UserinventoryDTO userinventoryDTO) {
         this.userinventoryDTO = userinventoryDTO;
+    }
+
+    public UserDTO getUserDTO() {
+        return userDTO;
+    }
+
+    public void setUserDTO(UserDTO userDTO) {
+        this.userDTO = userDTO;
+    }
+
+    public List<UserDTO> getUserDTOs() {
+        return userDTOs;
+    }
+
+    public void setUserDTOs(List<UserDTO> userDTOs) {
+        this.userDTOs = userDTOs;
     }
 
     public List<EquipmentDTO> getEquipmentDTOs() {

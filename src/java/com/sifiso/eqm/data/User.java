@@ -32,6 +32,8 @@ import javax.validation.constraints.Size;
 @Table(name = "user")
 @NamedQueries({
     @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u"),
+     @NamedQuery(name = "User.findUsersByOrganisationID", 
+             query = "SELECT u FROM User u WHERE u.organisation.organisationID = :organisationID"),
     @NamedQuery(name = "User.findByUserID", query = "SELECT u FROM User u WHERE u.userID = :userID"),
     @NamedQuery(name = "User.findByUserName", query = "SELECT u FROM User u WHERE u.userName = :userName"),
     @NamedQuery(name = "User.findByUserSurname", query = "SELECT u FROM User u WHERE u.userSurname = :userSurname"),

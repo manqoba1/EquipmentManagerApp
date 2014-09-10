@@ -26,7 +26,12 @@ import javax.persistence.Table;
 @Table(name = "userinventory")
 @NamedQueries({
     @NamedQuery(name = "Userinventory.findAll", query = "SELECT u FROM Userinventory u"),
-    @NamedQuery(name = "Userinventory.findByUserInventoryID", query = "SELECT u FROM Userinventory u WHERE u.userInventoryID = :userInventoryID")})
+    @NamedQuery(name = "Userinventory.findByUserInventoryID",
+            query = "SELECT u FROM Userinventory u "
+            + "WHERE u.userInventoryID = :userInventoryID"),
+    @NamedQuery(name = "Userinventory.findUserInventoryByUserID",
+            query = "SELECT u FROM Userinventory u WHERE u.user.userID = :userID"
+    )})
 public class Userinventory implements Serializable {
 
     private static final long serialVersionUID = 1L;

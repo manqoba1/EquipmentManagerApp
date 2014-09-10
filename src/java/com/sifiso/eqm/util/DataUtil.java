@@ -6,6 +6,7 @@
 package com.sifiso.eqm.util;
 
 import com.sfiso.eqm.dto.EquipmentDTO;
+import com.sfiso.eqm.dto.EqupmanageDTO;
 import com.sfiso.eqm.dto.InventoryDTO;
 import com.sfiso.eqm.dto.OrganisationDTO;
 import com.sfiso.eqm.dto.ResponseDTO;
@@ -15,6 +16,7 @@ import com.sifiso.eqm.data.Consultant;
 import com.sifiso.eqm.data.Consultantorganisation;
 import com.sifiso.eqm.data.Equipment;
 import com.sifiso.eqm.data.Equipmentmanager;
+import com.sifiso.eqm.data.Equpmanage;
 import com.sifiso.eqm.data.Inventory;
 import com.sifiso.eqm.data.Organisation;
 import com.sifiso.eqm.data.User;
@@ -26,6 +28,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import javax.validation.ConstraintViolationException;
+import javax.ws.rs.core.Response;
 
 /**
  *
@@ -178,7 +181,34 @@ public class DataUtil {
         return resp;
     }
 
-    public static List<UserinventoryDTO> getUserinventoryDTOs() throws DataException {
+    public static ResponseDTO assignManagerToEquipment(EqupmanageDTO dto) throws DataException {
+        em = EMUtil.getEntityManager();
+        ResponseDTO resp = new ResponseDTO();
+        EntityTransaction en = em.getTransaction();
+        en.begin();
+        Equpmanage e = new Equpmanage();
+        e.setEquipment(getEquipment(dto.getEquipmentID()));
+        e.setEquipmentmanager(getEquipmentmanager(dto.getEquipmentmanagerID()));
+
+        try {
+            em.persist(e);
+            en.commit();
+        } catch (ConstraintViolationException ex) {
+            throw new DataException(DataException.DUPLICATE);
+        } catch (IllegalStateException ex) {
+            throw new DataException(DataException.ILLEGAL_STATE);
+        } catch (Exception ex) {
+            throw new DataException(DataException.UNKNOWN_ERROR);
+        } finally {
+            if (en.isActive()) {
+                en.rollback();
+            }
+            em.close();
+        }
+        return resp;
+    }
+
+    public static List<UserinventoryDTO> getUserInventoryDTOs() throws DataException {
         em = EMUtil.getEntityManager();
         List<UserinventoryDTO> userinventoryDTOs = new ArrayList<>();
         try {
@@ -197,6 +227,37 @@ public class DataUtil {
         return userinventoryDTOs;
     }
 
+    public static ResponseDTO getUsersByOrganisationID(int organisationID) throws DataException {
+        em = EMUtil.getEntityManager();
+        ResponseDTO resp = new ResponseDTO();
+        try {
+            Query q = em.createNamedQuery("User.findUsersByOrganisationID");
+            q.setParameter("organisationID", organisationID);
+            List<User> in = q.getResultList();
+            List<UserDTO> userDTOs = new ArrayList<>();
+            List<UserinventoryDTO> userinventoryDTOs = getUserInventoryDTOs();
+            UserDTO userDTO;
+            for (User u : in) {
+                userDTO = new UserDTO(u);
+                for (int i = 0; i < userinventoryDTOs.size(); ++i) {
+                    if (u.getUserID() == userinventoryDTOs.get(i).getUserID()) {
+                        userDTO.getUserinventoryList().add(userinventoryDTOs.get(i));
+                    }
+                }
+                userDTOs.add(userDTO);
+            }
+            resp.setUserDTOs(userDTOs);
+
+        } catch (ConstraintViolationException ex) {
+            throw new DataException(DataException.DUPLICATE);
+        } catch (IllegalStateException ex) {
+            throw new DataException(DataException.ILLEGAL_STATE);
+        } catch (Exception ex) {
+            throw new DataException(DataException.UNKNOWN_ERROR);
+        }
+        return resp;
+    }
+
     public static ResponseDTO getAllEquipments() throws DataException {
         em = EMUtil.getEntityManager();
         ResponseDTO resp = new ResponseDTO();
@@ -205,7 +266,7 @@ public class DataUtil {
             Query q = em.createNamedQuery("Equipment.findAll");
             List<Equipment> eq = q.getResultList();
             List<EquipmentDTO> equipmentDTOs = new ArrayList<>();
-            List<InventoryDTO> inventoryDTOs = getInventoryByEquiID();
+            List<InventoryDTO> inventoryDTOs = getInventory();
             EquipmentDTO equipmentDTO;
             for (Equipment e : eq) {
                 equipmentDTO = new EquipmentDTO(e);
@@ -228,7 +289,7 @@ public class DataUtil {
         return resp;
     }
 
-    public static List<InventoryDTO> getInventoryByEquiID() throws DataException {
+    public static List<InventoryDTO> getInventory() throws DataException {
         em = EMUtil.getEntityManager();
         List<InventoryDTO> inventoryDTOs = new ArrayList<>();
         try {
