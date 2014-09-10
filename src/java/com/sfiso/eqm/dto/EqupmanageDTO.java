@@ -9,8 +9,6 @@ import com.sifiso.eqm.data.Equipment;
 import com.sifiso.eqm.data.Equipmentmanager;
 import com.sifiso.eqm.data.Equpmanage;
 
- 
-
 /**
  *
  * @author CodeTribe1

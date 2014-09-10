@@ -5,7 +5,6 @@
  */
 package com.sfiso.eqm.dto;
 
- 
 import com.sifiso.eqm.data.Organisation;
 import com.sifiso.eqm.data.User;
 import java.util.List;

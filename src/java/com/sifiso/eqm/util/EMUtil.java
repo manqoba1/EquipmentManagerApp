@@ -20,7 +20,7 @@ public class EMUtil {
     private static final Logger LOG = Logger.getLogger("EMUtil");
     private static EntityManagerFactory emf;
     private static EntityManager em;
-    
+
     private static void setEntityManager() {
         if (emf == null) {
             emf = Persistence.createEntityManagerFactory("EquipmentManagerPU");
@@ -35,8 +35,8 @@ public class EMUtil {
             }
         }
     }
-    
-    public static EntityManager getEntityManager(){
+
+    public static EntityManager getEntityManager() {
         setEntityManager();
         em.setFlushMode(FlushModeType.AUTO);
         return em;

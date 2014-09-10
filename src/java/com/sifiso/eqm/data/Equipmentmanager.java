@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.sifiso.eqm.data;
 
 import java.io.Serializable;
@@ -39,6 +38,7 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Equipmentmanager.findByEquipmentManagerEmail", query = "SELECT e FROM Equipmentmanager e WHERE e.equipmentManagerEmail = :equipmentManagerEmail"),
     @NamedQuery(name = "Equipmentmanager.findByEquipmentManagerTel", query = "SELECT e FROM Equipmentmanager e WHERE e.equipmentManagerTel = :equipmentManagerTel")})
 public class Equipmentmanager implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -145,7 +145,6 @@ public class Equipmentmanager implements Serializable {
         this.organisation = organisation;
     }
 
-  
     @Override
     public int hashCode() {
         int hash = 0;
@@ -170,5 +169,5 @@ public class Equipmentmanager implements Serializable {
     public String toString() {
         return "com.sifiso.eqm.data.Equipmentmanager[ equipmentManagerID=" + equipmentManagerID + " ]";
     }
-    
+
 }

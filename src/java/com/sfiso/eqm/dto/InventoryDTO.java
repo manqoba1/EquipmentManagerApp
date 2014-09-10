@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package com.sfiso.eqm.dto;
- 
+
 import com.sifiso.eqm.data.Equipment;
 import com.sifiso.eqm.data.Inventory;
 import java.util.List;

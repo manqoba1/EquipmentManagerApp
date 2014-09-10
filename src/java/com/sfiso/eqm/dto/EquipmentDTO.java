@@ -5,7 +5,6 @@
  */
 package com.sfiso.eqm.dto;
 
-
 import com.sifiso.eqm.data.Equipment;
 import com.sifiso.eqm.data.Organisation;
 import java.util.List;

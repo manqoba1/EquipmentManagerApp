@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.sifiso.eqm.data;
 
 import java.io.Serializable;
@@ -32,8 +31,8 @@ import javax.validation.constraints.Size;
 @Table(name = "user")
 @NamedQueries({
     @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u"),
-     @NamedQuery(name = "User.findUsersByOrganisationID", 
-             query = "SELECT u FROM User u WHERE u.organisation.organisationID = :organisationID"),
+    @NamedQuery(name = "User.findUsersByOrganisationID",
+            query = "SELECT u FROM User u WHERE u.organisation.organisationID = :organisationID"),
     @NamedQuery(name = "User.findByUserID", query = "SELECT u FROM User u WHERE u.userID = :userID"),
     @NamedQuery(name = "User.findByUserName", query = "SELECT u FROM User u WHERE u.userName = :userName"),
     @NamedQuery(name = "User.findByUserSurname", query = "SELECT u FROM User u WHERE u.userSurname = :userSurname"),
@@ -41,6 +40,7 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "User.findByUserTel", query = "SELECT u FROM User u WHERE u.userTel = :userTel"),
     @NamedQuery(name = "User.findByUserStatus", query = "SELECT u FROM User u WHERE u.userStatus = :userStatus")})
 public class User implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -137,8 +137,6 @@ public class User implements Serializable {
         this.organisation = organisation;
     }
 
-    
-
     public List<Userinventory> getUserinventoryList() {
         return userinventoryList;
     }
@@ -171,5 +169,5 @@ public class User implements Serializable {
     public String toString() {
         return "com.sifiso.eqm.data.User[ userID=" + userID + " ]";
     }
-    
+
 }

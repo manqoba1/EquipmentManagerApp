@@ -5,7 +5,6 @@
  */
 package com.sfiso.eqm.dto;
 
-
 import com.sifiso.eqm.data.Consultant;
 import java.util.List;
 

@@ -9,8 +9,6 @@ import com.sifiso.eqm.data.Inventory;
 import com.sifiso.eqm.data.User;
 import com.sifiso.eqm.data.Userinventory;
 
- 
-
 /**
  *
  * @author CodeTribe1

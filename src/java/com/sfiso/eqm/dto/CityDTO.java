@@ -8,7 +8,6 @@ package com.sfiso.eqm.dto;
 import com.sifiso.eqm.data.City;
 import com.sifiso.eqm.data.Province;
 
-
 /**
  *
  * @author CodeTribe1

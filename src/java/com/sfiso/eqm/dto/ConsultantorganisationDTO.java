@@ -9,7 +9,6 @@ import com.sifiso.eqm.data.Consultant;
 import com.sifiso.eqm.data.Consultantorganisation;
 import com.sifiso.eqm.data.Organisation;
 
-
 /**
  *
  * @author CodeTribe1
@@ -17,7 +16,7 @@ import com.sifiso.eqm.data.Organisation;
 public class ConsultantorganisationDTO {
 
     private Integer consultantOrganisationID;
-    
+
     private int consultantID;
     private String consultantName, consultantSurname, organisitionName;
     private int organisationID;
@@ -80,6 +79,5 @@ public class ConsultantorganisationDTO {
     public void setOrganisationID(int organisationID) {
         this.organisationID = organisationID;
     }
-    
 
 }
