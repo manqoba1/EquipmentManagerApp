@@ -17,7 +17,7 @@ public class EqupmanageDTO {
 
     private Integer equpManageID;
     private int equipmentID;
-    private String equipmentName, equipmentmanagerName, equipmentmanagerSurname;
+    private String equipmentImage, equipmentName, equipmentmanagerName, equipmentmanagerSurname;
     private int equipmentmanagerID;
 
     public EqupmanageDTO(Equpmanage em) {
@@ -25,6 +25,7 @@ public class EqupmanageDTO {
         Equipment e = em.getEquipment();
         equipmentID = e.getEquipmentID();
         equipmentName = e.getEquipmentName();
+        equipmentImage = e.getEquipmentImage();
         Equipmentmanager eqm = em.getEquipmentmanager();
         equipmentmanagerID = eqm.getEquipmentManagerID();
         equipmentmanagerName = eqm.getEquipmentManagerName();
@@ -37,6 +38,14 @@ public class EqupmanageDTO {
 
     public void setEqupManageID(Integer equpManageID) {
         this.equpManageID = equpManageID;
+    }
+
+    public String getEquipmentImage() {
+        return equipmentImage;
+    }
+
+    public void setEquipmentImage(String equipmentImage) {
+        this.equipmentImage = equipmentImage;
     }
 
     public int getEquipmentID() {

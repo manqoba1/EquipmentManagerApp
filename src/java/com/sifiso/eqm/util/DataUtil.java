@@ -6,6 +6,7 @@
 package com.sifiso.eqm.util;
 
 import com.sfiso.eqm.dto.EquipmentDTO;
+import com.sfiso.eqm.dto.EquipmentmanagerDTO;
 import com.sfiso.eqm.dto.EqupmanageDTO;
 import com.sfiso.eqm.dto.InventoryDTO;
 import com.sfiso.eqm.dto.OrganisationDTO;
@@ -35,10 +36,10 @@ import javax.ws.rs.core.Response;
  * @author CodeTribe1
  */
 public class DataUtil {
-
+    
     private static final Logger LOG = Logger.getLogger(DataUtil.class.getSimpleName());
     private static EntityManager em;
-
+    
     public static ResponseDTO assignDeviceToUser(UserinventoryDTO dto) throws DataException {
         em = EMUtil.getEntityManager();
         ResponseDTO resp = new ResponseDTO();
@@ -64,7 +65,7 @@ public class DataUtil {
         }
         return resp;
     }
-
+    
     public static ResponseDTO addEquipment(EquipmentDTO dto) throws DataException {
         em = EMUtil.getEntityManager();
         ResponseDTO resp = new ResponseDTO();
@@ -90,7 +91,7 @@ public class DataUtil {
         }
         return resp;
     }
-
+    
     public static ResponseDTO addInventory(InventoryDTO dto) throws DataException {
         em = EMUtil.getEntityManager();
         ResponseDTO resp = new ResponseDTO();
@@ -101,7 +102,7 @@ public class DataUtil {
         e.setInventoryModel(dto.getInventoryModel());
         e.setInventorySerialNo(dto.getInventorySerialNo());
         e.setEquipment(getEquipment(dto.getEquipmentID()));
-
+        
         try {
             em.persist(e);
             en.commit();
@@ -119,7 +120,7 @@ public class DataUtil {
         }
         return resp;
     }
-
+    
     public static ResponseDTO addUser(UserDTO dto) throws DataException {
         em = EMUtil.getEntityManager();
         ResponseDTO resp = new ResponseDTO();
@@ -132,7 +133,7 @@ public class DataUtil {
         e.setUserTel(dto.getUserTel());
         e.setUserStatus(1);
         e.setOrganisation(getOrganisation(dto.getOrganisationID()));
-
+        
         try {
             em.persist(e);
             en.commit();
@@ -150,7 +151,7 @@ public class DataUtil {
         }
         return resp;
     }
-
+    
     public static ResponseDTO addOrganisation(OrganisationDTO dto) throws DataException {
         em = EMUtil.getEntityManager();
         ResponseDTO resp = new ResponseDTO();
@@ -162,7 +163,7 @@ public class DataUtil {
         e.setContactname(dto.getContactname());
         e.setLatitude(dto.getLatitude());
         e.setLongitude(dto.getLongitude());
-
+        
         try {
             em.persist(e);
             en.commit();
@@ -180,7 +181,40 @@ public class DataUtil {
         }
         return resp;
     }
-
+    
+    public static ResponseDTO addEquipmentManager(EquipmentmanagerDTO dto) throws DataException {
+        em = EMUtil.getEntityManager();
+        ResponseDTO resp = new ResponseDTO();
+        EntityTransaction en = em.getTransaction();
+        en.begin();
+        Equipmentmanager e = new Equipmentmanager();
+        e.setEquipmentManagerName(dto.getOrganisationName());
+        e.setEquipmentManagerSurname(dto.getEquipmentManagerSurname());
+        e.setEquipmentManagerTel(dto.getEquipmentManagerTel());
+        e.setEquipmentManagerAddress(dto.getEquipmentManagerAddress());
+        e.setEquipmentManagerEmail(dto.getEquipmentManagerEmail());
+        e.setManagerImage(dto.getManagerImage());
+        e.setPassword(dto.getPassword());
+        e.setOrganisation(getOrganisation(dto.getOrganisationID()));
+        
+        try {
+            em.persist(e);
+            en.commit();
+        } catch (ConstraintViolationException ex) {
+            throw new DataException(DataException.DUPLICATE);
+        } catch (IllegalStateException ex) {
+            throw new DataException(DataException.ILLEGAL_STATE);
+        } catch (Exception ex) {
+            throw new DataException(DataException.UNKNOWN_ERROR);
+        } finally {
+            if (en.isActive()) {
+                en.rollback();
+            }
+            em.close();
+        }
+        return resp;
+    }
+    
     public static ResponseDTO assignManagerToEquipment(EqupmanageDTO dto) throws DataException {
         em = EMUtil.getEntityManager();
         ResponseDTO resp = new ResponseDTO();
@@ -189,7 +223,7 @@ public class DataUtil {
         Equpmanage e = new Equpmanage();
         e.setEquipment(getEquipment(dto.getEquipmentID()));
         e.setEquipmentmanager(getEquipmentmanager(dto.getEquipmentmanagerID()));
-
+        
         try {
             em.persist(e);
             en.commit();
@@ -207,7 +241,7 @@ public class DataUtil {
         }
         return resp;
     }
-
+    
     public static List<UserinventoryDTO> getUserInventoryDTOs() throws DataException {
         em = EMUtil.getEntityManager();
         List<UserinventoryDTO> userinventoryDTOs = new ArrayList<>();
@@ -226,7 +260,15 @@ public class DataUtil {
         }
         return userinventoryDTOs;
     }
-
+    
+    public static ResponseDTO getInventoryDTOs() throws DataException {
+        em = EMUtil.getEntityManager();
+        ResponseDTO resp = new ResponseDTO();
+        List<InventoryDTO> inventoryDTOs = getInventory();
+        resp.setInventoryDTOs(inventoryDTOs);
+        return resp;
+    }
+    
     public static ResponseDTO getUsersByOrganisationID(int organisationID) throws DataException {
         em = EMUtil.getEntityManager();
         ResponseDTO resp = new ResponseDTO();
@@ -247,7 +289,7 @@ public class DataUtil {
                 userDTOs.add(userDTO);
             }
             resp.setUserDTOs(userDTOs);
-
+            
         } catch (ConstraintViolationException ex) {
             throw new DataException(DataException.DUPLICATE);
         } catch (IllegalStateException ex) {
@@ -257,11 +299,11 @@ public class DataUtil {
         }
         return resp;
     }
-
+    
     public static ResponseDTO getAllEquipments() throws DataException {
         em = EMUtil.getEntityManager();
         ResponseDTO resp = new ResponseDTO();
-
+        
         try {
             Query q = em.createNamedQuery("Equipment.findAll");
             List<Equipment> eq = q.getResultList();
@@ -278,7 +320,7 @@ public class DataUtil {
                 equipmentDTOs.add(equipmentDTO);
             }
             resp.setEquipmentDTOs(equipmentDTOs);
-
+            
         } catch (ConstraintViolationException ex) {
             throw new DataException(DataException.DUPLICATE);
         } catch (IllegalStateException ex) {
@@ -288,7 +330,7 @@ public class DataUtil {
         }
         return resp;
     }
-
+    
     public static List<InventoryDTO> getInventory() throws DataException {
         em = EMUtil.getEntityManager();
         List<InventoryDTO> inventoryDTOs = new ArrayList<>();
@@ -308,49 +350,72 @@ public class DataUtil {
         return inventoryDTOs;
     }
 
+    public static ResponseDTO getInventoryByUserID(int userID) throws DataException {
+        em = EMUtil.getEntityManager();
+        ResponseDTO resp = new ResponseDTO();
+        List<InventoryDTO> inventoryDTOs = new ArrayList<>();
+        try {
+            Query q = em.createNamedQuery("Inventory.findInventoryByUserID");
+            q.setParameter("userID", userID);
+            List<Inventory> in = q.getResultList();
+            for (Inventory i : in) {
+                inventoryDTOs.add(new InventoryDTO(i));
+            }
+            resp.setInventoryDTOs(inventoryDTOs);
+        } catch (ConstraintViolationException ex) {
+            throw new DataException(DataException.DUPLICATE);
+        } catch (IllegalStateException ex) {
+            throw new DataException(DataException.ILLEGAL_STATE);
+        } catch (Exception ex) {
+            throw new DataException(DataException.UNKNOWN_ERROR);
+        }
+        return resp;
+    }
+
     //Entity helper methods
+
     public static Consultant getConsultant(int consultantID) {
         em = EMUtil.getEntityManager();
         Consultant c = em.find(Consultant.class, consultantID);
         return c;
     }
-
+    
     public static Consultantorganisation getConsultantorganisation(int consultantorganisationID) {
         em = EMUtil.getEntityManager();
         Consultantorganisation c = em.find(Consultantorganisation.class, consultantorganisationID);
         return c;
     }
-
+    
     public static Equipment getEquipment(int equipmentID) {
         em = EMUtil.getEntityManager();
         Equipment e = em.find(Equipment.class, equipmentID);
         return e;
     }
-
+    
     public static Equipmentmanager getEquipmentmanager(int equipmentManagerID) {
         em = EMUtil.getEntityManager();
         Equipmentmanager c = em.find(Equipmentmanager.class, equipmentManagerID);
         return c;
     }
-
+    
     public static Inventory getInventory(int inventoryID) {
         em = EMUtil.getEntityManager();
         Inventory c = em.find(Inventory.class, inventoryID);
         return c;
     }
-
+    
     public static Organisation getOrganisation(int organisationID) {
         em = EMUtil.getEntityManager();
         Organisation c = em.find(Organisation.class, organisationID);
         return c;
     }
-
+    
     public static User getUser(int userID) {
         em = EMUtil.getEntityManager();
         User c = em.find(User.class, userID);
         return c;
     }
-
+    
     public static Userinventory getUserinventory(int userInventoryID) {
         em = EMUtil.getEntityManager();
         Userinventory c = em.find(Userinventory.class, userInventoryID);

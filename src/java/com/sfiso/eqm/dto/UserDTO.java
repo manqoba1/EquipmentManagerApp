@@ -22,6 +22,7 @@ public class UserDTO {
     private String userTel;
     private Integer userStatus;
     private int organisationID;
+    private String userImage;
     private List<UserinventoryDTO> userinventoryList;
 
     public UserDTO(User u) {
@@ -31,6 +32,7 @@ public class UserDTO {
         userEmaill = u.getUserEmaill();
         userTel = u.getUserTel();
         userStatus = u.getUserStatus();
+        userImage = u.getUserImage();
         Organisation w = u.getOrganisation();
         organisationName = w.getOrganisationName();
         organisationID = w.getOrganisationID();
@@ -43,6 +45,14 @@ public class UserDTO {
 
     public void setUserID(Integer userID) {
         this.userID = userID;
+    }
+
+    public String getUserImage() {
+        return userImage;
+    }
+
+    public void setUserImage(String userImage) {
+        this.userImage = userImage;
     }
 
     public String getUserName() {

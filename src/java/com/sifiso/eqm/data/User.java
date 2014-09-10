@@ -31,14 +31,18 @@ import javax.validation.constraints.Size;
 @Table(name = "user")
 @NamedQueries({
     @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u"),
+    @NamedQuery(name = "User.findByUserID",
+            query = "SELECT u FROM User u WHERE u.userID = :userID"),
+    @NamedQuery(name = "User.findByUserSurname",
+            query = "SELECT u FROM User u WHERE u.userSurname = :userSurname"),
+    @NamedQuery(name = "User.findByUserEmaill",
+            query = "SELECT u FROM User u WHERE u.userEmaill = :userEmaill"),
+    @NamedQuery(name = "User.findByUserStatus",
+            query = "SELECT u FROM User u WHERE u.userStatus = :userStatus"),
     @NamedQuery(name = "User.findUsersByOrganisationID",
-            query = "SELECT u FROM User u WHERE u.organisation.organisationID = :organisationID"),
-    @NamedQuery(name = "User.findByUserID", query = "SELECT u FROM User u WHERE u.userID = :userID"),
-    @NamedQuery(name = "User.findByUserName", query = "SELECT u FROM User u WHERE u.userName = :userName"),
-    @NamedQuery(name = "User.findByUserSurname", query = "SELECT u FROM User u WHERE u.userSurname = :userSurname"),
-    @NamedQuery(name = "User.findByUserEmaill", query = "SELECT u FROM User u WHERE u.userEmaill = :userEmaill"),
-    @NamedQuery(name = "User.findByUserTel", query = "SELECT u FROM User u WHERE u.userTel = :userTel"),
-    @NamedQuery(name = "User.findByUserStatus", query = "SELECT u FROM User u WHERE u.userStatus = :userStatus")})
+            query = "SELECT u FROM User u "
+            + "WHERE u.organisation.organisationID = :organisationID")
+})
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -63,6 +67,11 @@ public class User implements Serializable {
     private String userTel;
     @Column(name = "userStatus")
     private Integer userStatus;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 500)
+    @Column(name = "userImage")
+    private String userImage;
     @JoinColumn(name = "organisationID", referencedColumnName = "organisationID")
     @ManyToOne(optional = false)
     private Organisation organisation;
@@ -76,9 +85,10 @@ public class User implements Serializable {
         this.userID = userID;
     }
 
-    public User(Integer userID, String userName) {
+    public User(Integer userID, String userName, String userImage) {
         this.userID = userID;
         this.userName = userName;
+        this.userImage = userImage;
     }
 
     public Integer getUserID() {
@@ -127,6 +137,14 @@ public class User implements Serializable {
 
     public void setUserStatus(Integer userStatus) {
         this.userStatus = userStatus;
+    }
+
+    public String getUserImage() {
+        return userImage;
+    }
+
+    public void setUserImage(String userImage) {
+        this.userImage = userImage;
     }
 
     public Organisation getOrganisation() {

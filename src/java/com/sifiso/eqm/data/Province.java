@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package com.sifiso.eqm.data;
 
 import java.io.Serializable;
@@ -32,7 +33,6 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Province.findByProvinceID", query = "SELECT p FROM Province p WHERE p.provinceID = :provinceID"),
     @NamedQuery(name = "Province.findByName", query = "SELECT p FROM Province p WHERE p.name = :name")})
 public class Province implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -107,5 +107,5 @@ public class Province implements Serializable {
     public String toString() {
         return "com.sifiso.eqm.data.Province[ provinceID=" + provinceID + " ]";
     }
-
+    
 }

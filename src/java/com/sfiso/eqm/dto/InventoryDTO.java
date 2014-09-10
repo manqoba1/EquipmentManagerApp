@@ -18,8 +18,9 @@ public class InventoryDTO {
     private Integer inventoryID;
     private String inventoryName;
     private String inventoryModel;
-    private String inventorySerialNo, equipmentName;
+    private String inventorySerialNo, equipmentName, equipmentImage;
     private int equipmentID;
+    private String inventoryImage;
     private List<UserinventoryDTO> userinventoryList;
 
     public InventoryDTO(Inventory i) {
@@ -27,9 +28,11 @@ public class InventoryDTO {
         inventoryName = i.getInventoryName();
         inventoryModel = i.getInventoryModel();
         inventorySerialNo = i.getInventorySerialNo();
+        inventoryImage = i.getInventoryImage();
         Equipment e = i.getEquipment();
         equipmentID = e.getEquipmentID();
         equipmentName = e.getEquipmentName();
+        equipmentImage = e.getEquipmentImage();
     }
 
     public Integer getInventoryID() {
@@ -38,6 +41,22 @@ public class InventoryDTO {
 
     public void setInventoryID(Integer inventoryID) {
         this.inventoryID = inventoryID;
+    }
+
+    public String getEquipmentImage() {
+        return equipmentImage;
+    }
+
+    public void setEquipmentImage(String equipmentImage) {
+        this.equipmentImage = equipmentImage;
+    }
+
+    public String getInventoryImage() {
+        return inventoryImage;
+    }
+
+    public void setInventoryImage(String inventoryImage) {
+        this.inventoryImage = inventoryImage;
     }
 
     public String getInventoryName() {

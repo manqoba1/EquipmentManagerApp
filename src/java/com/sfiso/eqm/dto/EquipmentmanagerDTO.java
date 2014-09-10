@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @author CodeTribe1
  */
-class EquipmentmanagerDTO {
+public class EquipmentmanagerDTO {
 
     private Integer equipmentManagerID;
     private String equipmentManagerName;
@@ -21,6 +21,8 @@ class EquipmentmanagerDTO {
     private String equipmentManagerEmail;
     private String equipmentManagerTel;
     private String equipmentManagerAddress, organisationName;
+    private String managerImage;
+    private String password;
     private List<EqupmanageDTO> equpmanageList;
     private int organisationID;
 
@@ -31,6 +33,8 @@ class EquipmentmanagerDTO {
         equipmentManagerEmail = e.getEquipmentManagerEmail();
         equipmentManagerTel = e.getEquipmentManagerTel();
         equipmentManagerAddress = e.getEquipmentManagerAddress();
+        managerImage = e.getManagerImage();
+        password = e.getPassword();
         Organisation o = e.getOrganisation();
         organisationID = o.getOrganisationID();
         organisationName = o.getOrganisationName();
@@ -42,6 +46,22 @@ class EquipmentmanagerDTO {
 
     public void setEquipmentManagerID(Integer equipmentManagerID) {
         this.equipmentManagerID = equipmentManagerID;
+    }
+
+    public String getManagerImage() {
+        return managerImage;
+    }
+
+    public void setManagerImage(String managerImage) {
+        this.managerImage = managerImage;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getEquipmentManagerName() {

@@ -56,10 +56,47 @@ public class TesterServlet extends HttpServlet {
         try {
             resp.setStatusCode(ResponseDTO.OK);
             switch (dto.getRequestType()) {
+                case RequestDTO.ADD_EQUIPMENT:
+                    resp = DataUtil.addEquipment(dto.getEquipmentDTO());
+                    resp.setMessage("Equipment Added");
+                    break;
+                case RequestDTO.ADD_INVENTORY:
+                    resp = DataUtil.addInventory(dto.getInventoryDTO());
+                    resp.setMessage("Inventory Added");
+                    break;
+                case RequestDTO.ADD_USER:
+                    resp = DataUtil.addUser(dto.getUserDTO());
+                    resp.setMessage("User Added");
+                    break;
+                case RequestDTO.ADD_ORGANISATION:
+                    resp = DataUtil.addOrganisation(dto.getOrganisationDTO());
+                    resp.setMessage("Organisation Added");
+                    break;
+                case RequestDTO.ADD_EQUIPMENT_MANAGER:
+                    resp = DataUtil.addEquipmentManager(dto.getEquipmentmanagerDTO());
+                    resp.setMessage("Equipment Manager Added");
+                    break;
+                case RequestDTO.ASSIGN_EQUIPMENT_TO_MANANGER:
+                    resp = DataUtil.assignManagerToEquipment(dto.getEqupmanageDTO());
+                    resp.setMessage("Equipment Manager Assigned");
+                    break;
+                case RequestDTO.ASSIGN_INVENTORY_TO_USER:
+                    resp = DataUtil.assignDeviceToUser(dto.getUserinventoryDTO());
+                    resp.setMessage("Equipment Assigned To User");
+                    break;
                 case RequestDTO.GET_EQUIPMENT:
                     resp = DataUtil.getAllEquipments();
                     resp.setMessage("Equipments Retriveed");
                     break;
+                case RequestDTO.GET_INVENTORY_BY_USER_ID:
+                    resp = DataUtil.getInventoryByUserID(dto.getUserID());
+                    resp.setMessage("Equipments Retriveed");
+                    break;
+                case RequestDTO.GET_USER_BY_ORGANISATION_ID:
+                    resp = DataUtil.getUsersByOrganisationID(dto.getOrganisationID());
+                    resp.setMessage("Equipments Retriveed");
+                    break;
+
                 default:
                     break;
             }

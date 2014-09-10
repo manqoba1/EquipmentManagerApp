@@ -19,6 +19,7 @@ public class EquipmentDTO {
     private String equipmentName, organisationName;
     private List<EqupmanageDTO> equpmanageList;
     private int organisationID;
+    private String equipmentImage;
     private List<InventoryDTO> inventoryList;
 
     public EquipmentDTO(Equipment e) {
@@ -27,6 +28,15 @@ public class EquipmentDTO {
         Organisation o = e.getOrganisation();
         organisationID = o.getOrganisationID();
         organisationName = o.getOrganisationName();
+        equipmentImage = e.getEquipmentImage();
+    }
+
+    public String getEquipmentImage() {
+        return equipmentImage;
+    }
+
+    public void setEquipmentImage(String equipmentImage) {
+        this.equipmentImage = equipmentImage;
     }
 
     public Integer getEquipmentID() {

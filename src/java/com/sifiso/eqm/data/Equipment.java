@@ -32,7 +32,8 @@ import javax.validation.constraints.Size;
 @NamedQueries({
     @NamedQuery(name = "Equipment.findAll", query = "SELECT e FROM Equipment e"),
     @NamedQuery(name = "Equipment.findByEquipmentID", query = "SELECT e FROM Equipment e WHERE e.equipmentID = :equipmentID"),
-    @NamedQuery(name = "Equipment.findByEquipmentName", query = "SELECT e FROM Equipment e WHERE e.equipmentName = :equipmentName")})
+    @NamedQuery(name = "Equipment.findByEquipmentName", query = "SELECT e FROM Equipment e WHERE e.equipmentName = :equipmentName"),
+    @NamedQuery(name = "Equipment.findByEquipmentImage", query = "SELECT e FROM Equipment e WHERE e.equipmentImage = :equipmentImage")})
 public class Equipment implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -46,6 +47,11 @@ public class Equipment implements Serializable {
     @Size(min = 1, max = 255)
     @Column(name = "equipmentName")
     private String equipmentName;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 500)
+    @Column(name = "equipmentImage")
+    private String equipmentImage;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "equipment")
     private List<Equpmanage> equpmanageList;
     @JoinColumn(name = "organisationID", referencedColumnName = "organisationID")
@@ -61,9 +67,10 @@ public class Equipment implements Serializable {
         this.equipmentID = equipmentID;
     }
 
-    public Equipment(Integer equipmentID, String equipmentName) {
+    public Equipment(Integer equipmentID, String equipmentName, String equipmentImage) {
         this.equipmentID = equipmentID;
         this.equipmentName = equipmentName;
+        this.equipmentImage = equipmentImage;
     }
 
     public Integer getEquipmentID() {
@@ -80,6 +87,14 @@ public class Equipment implements Serializable {
 
     public void setEquipmentName(String equipmentName) {
         this.equipmentName = equipmentName;
+    }
+
+    public String getEquipmentImage() {
+        return equipmentImage;
+    }
+
+    public void setEquipmentImage(String equipmentImage) {
+        this.equipmentImage = equipmentImage;
     }
 
     public List<Equpmanage> getEqupmanageList() {

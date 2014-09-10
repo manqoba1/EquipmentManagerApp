@@ -36,7 +36,9 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Equipmentmanager.findByEquipmentManagerName", query = "SELECT e FROM Equipmentmanager e WHERE e.equipmentManagerName = :equipmentManagerName"),
     @NamedQuery(name = "Equipmentmanager.findByEquipmentManagerSurname", query = "SELECT e FROM Equipmentmanager e WHERE e.equipmentManagerSurname = :equipmentManagerSurname"),
     @NamedQuery(name = "Equipmentmanager.findByEquipmentManagerEmail", query = "SELECT e FROM Equipmentmanager e WHERE e.equipmentManagerEmail = :equipmentManagerEmail"),
-    @NamedQuery(name = "Equipmentmanager.findByEquipmentManagerTel", query = "SELECT e FROM Equipmentmanager e WHERE e.equipmentManagerTel = :equipmentManagerTel")})
+    @NamedQuery(name = "Equipmentmanager.findByEquipmentManagerTel", query = "SELECT e FROM Equipmentmanager e WHERE e.equipmentManagerTel = :equipmentManagerTel"),
+    @NamedQuery(name = "Equipmentmanager.findByManagerImage", query = "SELECT e FROM Equipmentmanager e WHERE e.managerImage = :managerImage"),
+    @NamedQuery(name = "Equipmentmanager.findByPassword", query = "SELECT e FROM Equipmentmanager e WHERE e.password = :password")})
 public class Equipmentmanager implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -63,6 +65,16 @@ public class Equipmentmanager implements Serializable {
     @Size(max = 65535)
     @Column(name = "equipmentManagerAddress")
     private String equipmentManagerAddress;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 500)
+    @Column(name = "managerImage")
+    private String managerImage;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 500)
+    @Column(name = "password")
+    private String password;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "equipmentmanager")
     private List<Equpmanage> equpmanageList;
     @JoinColumn(name = "organisationID", referencedColumnName = "organisationID")
@@ -76,9 +88,11 @@ public class Equipmentmanager implements Serializable {
         this.equipmentManagerID = equipmentManagerID;
     }
 
-    public Equipmentmanager(Integer equipmentManagerID, String equipmentManagerEmail) {
+    public Equipmentmanager(Integer equipmentManagerID, String equipmentManagerEmail, String managerImage, String password) {
         this.equipmentManagerID = equipmentManagerID;
         this.equipmentManagerEmail = equipmentManagerEmail;
+        this.managerImage = managerImage;
+        this.password = password;
     }
 
     public Integer getEquipmentManagerID() {
@@ -127,6 +141,22 @@ public class Equipmentmanager implements Serializable {
 
     public void setEquipmentManagerAddress(String equipmentManagerAddress) {
         this.equipmentManagerAddress = equipmentManagerAddress;
+    }
+
+    public String getManagerImage() {
+        return managerImage;
+    }
+
+    public void setManagerImage(String managerImage) {
+        this.managerImage = managerImage;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public List<Equpmanage> getEqupmanageList() {

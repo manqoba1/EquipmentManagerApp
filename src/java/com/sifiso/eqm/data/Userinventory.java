@@ -17,6 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -26,12 +27,8 @@ import javax.persistence.Table;
 @Table(name = "userinventory")
 @NamedQueries({
     @NamedQuery(name = "Userinventory.findAll", query = "SELECT u FROM Userinventory u"),
-    @NamedQuery(name = "Userinventory.findByUserInventoryID",
-            query = "SELECT u FROM Userinventory u "
-            + "WHERE u.userInventoryID = :userInventoryID"),
-    @NamedQuery(name = "Userinventory.findUserInventoryByUserID",
-            query = "SELECT u FROM Userinventory u WHERE u.user.userID = :userID"
-    )})
+    @NamedQuery(name = "Userinventory.findByUserInventoryID", query = "SELECT u FROM Userinventory u WHERE u.userInventoryID = :userInventoryID"),
+    @NamedQuery(name = "Userinventory.findByReturn1", query = "SELECT u FROM Userinventory u WHERE u.return1 = :return1")})
 public class Userinventory implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -40,6 +37,10 @@ public class Userinventory implements Serializable {
     @Basic(optional = false)
     @Column(name = "userInventoryID")
     private Integer userInventoryID;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "return")
+    private int return1;
     @JoinColumn(name = "inventoryID", referencedColumnName = "inventoryID")
     @ManyToOne(optional = false)
     private Inventory inventory;
@@ -54,12 +55,25 @@ public class Userinventory implements Serializable {
         this.userInventoryID = userInventoryID;
     }
 
+    public Userinventory(Integer userInventoryID, int return1) {
+        this.userInventoryID = userInventoryID;
+        this.return1 = return1;
+    }
+
     public Integer getUserInventoryID() {
         return userInventoryID;
     }
 
     public void setUserInventoryID(Integer userInventoryID) {
         this.userInventoryID = userInventoryID;
+    }
+
+    public int getReturn1() {
+        return return1;
+    }
+
+    public void setReturn1(int return1) {
+        this.return1 = return1;
     }
 
     public Inventory getInventory() {

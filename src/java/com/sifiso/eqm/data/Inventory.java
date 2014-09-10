@@ -30,11 +30,20 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "inventory")
 @NamedQueries({
-    @NamedQuery(name = "Inventory.findAll", query = "SELECT i FROM Inventory i"),
-    @NamedQuery(name = "Inventory.findByInventoryID", query = "SELECT i FROM Inventory i WHERE i.inventoryID = :inventoryID"),
-    @NamedQuery(name = "Inventory.findByInventoryName", query = "SELECT i FROM Inventory i WHERE i.inventoryName = :inventoryName"),
-    @NamedQuery(name = "Inventory.findByInventoryModel", query = "SELECT i FROM Inventory i WHERE i.inventoryModel = :inventoryModel"),
-    @NamedQuery(name = "Inventory.findByInventorySerialNo", query = "SELECT i FROM Inventory i WHERE i.inventorySerialNo = :inventorySerialNo")})
+    @NamedQuery(name = "Inventory.findAll", 
+            query = "SELECT i FROM Inventory i"),
+    @NamedQuery(name = "Inventory.findByInventoryID", 
+            query = "SELECT i FROM Inventory i WHERE i.inventoryID = :inventoryID"),
+    @NamedQuery(name = "Inventory.findByInventoryName", 
+            query = "SELECT i FROM Inventory i WHERE i.inventoryName = :inventoryName"),
+    @NamedQuery(name = "Inventory.findByInventoryModel",             
+            query = "SELECT i FROM Inventory i WHERE i.inventoryModel = :inventoryModel"),
+    @NamedQuery(name = "Inventory.findByInventorySerialNo", 
+            query = "SELECT i FROM Inventory i WHERE i.inventorySerialNo = :inventorySerialNo"),
+    @NamedQuery(name = "Inventory.findByInventoryImage", 
+            query = "SELECT i FROM Inventory i WHERE i.inventoryImage = :inventoryImage"),
+    @NamedQuery(name = "Inventory.findInventoryByUserID",
+            query = "SELECT i FROM Inventory i WHERE i.userinventoryList.user.userID = :userID")})
 public class Inventory implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -54,6 +63,11 @@ public class Inventory implements Serializable {
     @Size(max = 45)
     @Column(name = "inventorySerialNo")
     private String inventorySerialNo;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 500)
+    @Column(name = "inventoryImage")
+    private String inventoryImage;
     @JoinColumn(name = "equipmentID", referencedColumnName = "equipmentID")
     @ManyToOne(optional = false)
     private Equipment equipment;
@@ -67,9 +81,10 @@ public class Inventory implements Serializable {
         this.inventoryID = inventoryID;
     }
 
-    public Inventory(Integer inventoryID, String inventoryName) {
+    public Inventory(Integer inventoryID, String inventoryName, String inventoryImage) {
         this.inventoryID = inventoryID;
         this.inventoryName = inventoryName;
+        this.inventoryImage = inventoryImage;
     }
 
     public Integer getInventoryID() {
@@ -102,6 +117,14 @@ public class Inventory implements Serializable {
 
     public void setInventorySerialNo(String inventorySerialNo) {
         this.inventorySerialNo = inventorySerialNo;
+    }
+
+    public String getInventoryImage() {
+        return inventoryImage;
+    }
+
+    public void setInventoryImage(String inventoryImage) {
+        this.inventoryImage = inventoryImage;
     }
 
     public Equipment getEquipment() {

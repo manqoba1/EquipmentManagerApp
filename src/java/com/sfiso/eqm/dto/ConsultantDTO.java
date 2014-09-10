@@ -19,6 +19,7 @@ public class ConsultantDTO {
     private String consultantSurname;
     private String consultantEmail;
     private String consultantTel;
+    private String consultantImage;
     private List<ConsultantorganisationDTO> consultantorganisationList;
 
     public ConsultantDTO(Consultant c) {
@@ -27,6 +28,15 @@ public class ConsultantDTO {
         consultantSurname = c.getConsultantSurname();
         consultantEmail = c.getConsultantEmail();
         consultantTel = c.getConsultantTel();
+        consultantImage = c.getConsultantImage();
+    }
+
+    public String getConsultantImage() {
+        return consultantImage;
+    }
+
+    public void setConsultantImage(String consultantImage) {
+        this.consultantImage = consultantImage;
     }
 
     public Integer getConsultantID() {

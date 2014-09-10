@@ -18,7 +18,7 @@ public class ConsultantorganisationDTO {
     private Integer consultantOrganisationID;
 
     private int consultantID;
-    private String consultantName, consultantSurname, organisitionName;
+    private String consultantImage, consultantName, consultantSurname, organisitionName;
     private int organisationID;
 
     public ConsultantorganisationDTO(Consultantorganisation d) {
@@ -27,6 +27,7 @@ public class ConsultantorganisationDTO {
         consultantID = c.getConsultantID();
         consultantName = c.getConsultantName();
         consultantSurname = c.getConsultantSurname();
+        consultantImage = c.getConsultantImage();
         Organisation o = d.getOrganisation();
         organisationID = o.getOrganisationID();
         organisitionName = o.getOrganisationName();
@@ -38,6 +39,14 @@ public class ConsultantorganisationDTO {
 
     public void setConsultantOrganisationID(Integer consultantOrganisationID) {
         this.consultantOrganisationID = consultantOrganisationID;
+    }
+
+    public String getConsultantImage() {
+        return consultantImage;
+    }
+
+    public void setConsultantImage(String consultantImage) {
+        this.consultantImage = consultantImage;
     }
 
     public int getConsultantID() {

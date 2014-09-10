@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package com.sifiso.eqm.data;
 
 import java.io.Serializable;
@@ -33,9 +34,9 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Consultant.findByConsultantName", query = "SELECT c FROM Consultant c WHERE c.consultantName = :consultantName"),
     @NamedQuery(name = "Consultant.findByConsultantSurname", query = "SELECT c FROM Consultant c WHERE c.consultantSurname = :consultantSurname"),
     @NamedQuery(name = "Consultant.findByConsultantEmail", query = "SELECT c FROM Consultant c WHERE c.consultantEmail = :consultantEmail"),
-    @NamedQuery(name = "Consultant.findByConsultantTel", query = "SELECT c FROM Consultant c WHERE c.consultantTel = :consultantTel")})
+    @NamedQuery(name = "Consultant.findByConsultantTel", query = "SELECT c FROM Consultant c WHERE c.consultantTel = :consultantTel"),
+    @NamedQuery(name = "Consultant.findByConsultantImage", query = "SELECT c FROM Consultant c WHERE c.consultantImage = :consultantImage")})
 public class Consultant implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -56,6 +57,11 @@ public class Consultant implements Serializable {
     @Size(max = 15)
     @Column(name = "consultantTel")
     private String consultantTel;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 500)
+    @Column(name = "consultantImage")
+    private String consultantImage;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "consultant")
     private List<Consultantorganisation> consultantorganisationList;
 
@@ -66,9 +72,10 @@ public class Consultant implements Serializable {
         this.consultantID = consultantID;
     }
 
-    public Consultant(Integer consultantID, String consultantName) {
+    public Consultant(Integer consultantID, String consultantName, String consultantImage) {
         this.consultantID = consultantID;
         this.consultantName = consultantName;
+        this.consultantImage = consultantImage;
     }
 
     public Integer getConsultantID() {
@@ -111,6 +118,14 @@ public class Consultant implements Serializable {
         this.consultantTel = consultantTel;
     }
 
+    public String getConsultantImage() {
+        return consultantImage;
+    }
+
+    public void setConsultantImage(String consultantImage) {
+        this.consultantImage = consultantImage;
+    }
+
     public List<Consultantorganisation> getConsultantorganisationList() {
         return consultantorganisationList;
     }
@@ -143,5 +158,5 @@ public class Consultant implements Serializable {
     public String toString() {
         return "com.sifiso.eqm.data.Consultant[ consultantID=" + consultantID + " ]";
     }
-
+    
 }
