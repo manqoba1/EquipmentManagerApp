@@ -6,6 +6,7 @@
 package com.sifiso.eqm.data;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,6 +18,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -26,7 +30,13 @@ import javax.persistence.Table;
 @Table(name = "equpmanage")
 @NamedQueries({
     @NamedQuery(name = "Equpmanage.findAll", query = "SELECT e FROM Equpmanage e"),
-    @NamedQuery(name = "Equpmanage.findByEqupManageID", query = "SELECT e FROM Equpmanage e WHERE e.equpManageID = :equpManageID")})
+    @NamedQuery(name = "Equpmanage.findByManagerID",
+            query = "SELECT e FROM Equpmanage e WHERE e.equipmentmanager.equipmentManagerID = :managerID"),
+    @NamedQuery(name = "Equpmanage.findByEqupManageID", query = "SELECT e FROM Equpmanage e WHERE e.equpManageID = :equpManageID"),
+    @NamedQuery(name = "Equpmanage.findByAssignedDate",
+            query = "SELECT e FROM Equpmanage e WHERE e.assignedDate = :assignedDate"),
+    @NamedQuery(name = "Equpmanage.findByPasswordAndEmail",
+            query = "SELECT e FROM Equpmanage e WHERE e.equipmentmanager.password = :password AND e.equipmentmanager.equipmentManagerEmail = :email")})
 public class Equpmanage implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -35,6 +45,11 @@ public class Equpmanage implements Serializable {
     @Basic(optional = false)
     @Column(name = "equpManageID")
     private Integer equpManageID;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "assignedDate")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date assignedDate;
     @JoinColumn(name = "equipmentID", referencedColumnName = "equipmentID")
     @ManyToOne(optional = false)
     private Equipment equipment;
@@ -49,12 +64,25 @@ public class Equpmanage implements Serializable {
         this.equpManageID = equpManageID;
     }
 
+    public Equpmanage(Integer equpManageID, Date assignedDate) {
+        this.equpManageID = equpManageID;
+        this.assignedDate = assignedDate;
+    }
+
     public Integer getEqupManageID() {
         return equpManageID;
     }
 
     public void setEqupManageID(Integer equpManageID) {
         this.equpManageID = equpManageID;
+    }
+
+    public Date getAssignedDate() {
+        return assignedDate;
+    }
+
+    public void setAssignedDate(Date assignedDate) {
+        this.assignedDate = assignedDate;
     }
 
     public Equipment getEquipment() {

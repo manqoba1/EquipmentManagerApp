@@ -37,8 +37,9 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Equipmentmanager.findByEquipmentManagerSurname", query = "SELECT e FROM Equipmentmanager e WHERE e.equipmentManagerSurname = :equipmentManagerSurname"),
     @NamedQuery(name = "Equipmentmanager.findByEquipmentManagerEmail", query = "SELECT e FROM Equipmentmanager e WHERE e.equipmentManagerEmail = :equipmentManagerEmail"),
     @NamedQuery(name = "Equipmentmanager.findByEquipmentManagerTel", query = "SELECT e FROM Equipmentmanager e WHERE e.equipmentManagerTel = :equipmentManagerTel"),
-    @NamedQuery(name = "Equipmentmanager.findByManagerImage", query = "SELECT e FROM Equipmentmanager e WHERE e.managerImage = :managerImage"),
-    @NamedQuery(name = "Equipmentmanager.findByPassword", query = "SELECT e FROM Equipmentmanager e WHERE e.password = :password")})
+    @NamedQuery(name = "Equipmentmanager.findByManagerImage",
+            query = "SELECT e FROM Equipmentmanager e WHERE e.managerImage = :managerImage")
+})
 public class Equipmentmanager implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -16,14 +16,20 @@ import com.sifiso.eqm.data.Userinventory;
 public class UserinventoryDTO {
 
     private Integer userInventoryID;
+    private long issuedDate;
+    private long returnedDate;
     private int inventoryID;
     private String userName;
+    private int return1;
     private String userSurname, userImage, inventoryImage, inventoryName, inventoryModel, inventorySerialNo;
     private Integer userStatus;
     private int userID;
 
     public UserinventoryDTO(Userinventory ui) {
         userInventoryID = ui.getUserInventoryID();
+        issuedDate = ui.getIssuedDate().getTime();
+        returnedDate = ui.getReturnedDate().getTime();
+        return1 = ui.getReturn1();
         User u = ui.getUser();
         userID = u.getUserID();
         userName = u.getUserName();
@@ -44,6 +50,30 @@ public class UserinventoryDTO {
 
     public void setUserInventoryID(Integer userInventoryID) {
         this.userInventoryID = userInventoryID;
+    }
+
+    public int getReturn1() {
+        return return1;
+    }
+
+    public void setReturn1(int return1) {
+        this.return1 = return1;
+    }
+
+    public long getIssuedDate() {
+        return issuedDate;
+    }
+
+    public void setIssuedDate(long issuedDate) {
+        this.issuedDate = issuedDate;
+    }
+
+    public long getReturnedDate() {
+        return returnedDate;
+    }
+
+    public void setReturnedDate(long returnedDate) {
+        this.returnedDate = returnedDate;
     }
 
     public String getInventorySerialNo() {

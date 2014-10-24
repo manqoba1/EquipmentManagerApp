@@ -14,12 +14,13 @@ import java.util.List;
 public class RequestDTO {
 
     private int requestType, userID, equipmentID, organisationID;
-    private String name;
+    private String name, email, password;
+    private boolean unzipped;
 
     public static final int ADD_EQUIPMENT = 1;
     public static final int ADD_INVENTORY = 2;
     public static final int ASSIGN_INVENTORY_TO_USER = 3;
-    public static final int GET_EQUIPMENT = 4;
+    public static final int GET_EQUIPMENT_BY_ID = 4;
     public static final int GET_INVENTORY = 5;
     public static final int GET_USER_INVENTORY = 6;
     public static final int ADD_USER = 7;
@@ -29,7 +30,10 @@ public class RequestDTO {
     public static final int ADD_EQUIPMENT_MANAGER = 11;
     public static final int GET_INVENTORY_BY_USER_ID = 12;
     public static final int GET_INVENTORY_BY_EQUIPMENT_ID = 13;
-    //  public static final int GET_INVENTORY_BY_USER_ID = 14;
+    public static final int AUTHENTICATE_MANAGER = 14;
+    // public static final int AUTHENTICATE_MANAGER = 14;
+    //   public static final int AUTHENTICATE_MANAGER = 14;
+    //    public static final int AUTHENTICATE_MANAGER = 14;
 
     private EquipmentDTO equipmentDTO;
     private InventoryDTO inventoryDTO;
@@ -61,6 +65,30 @@ public class RequestDTO {
 
     public void setRequestType(int requestType) {
         this.requestType = requestType;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public boolean isUnzipped() {
+        return unzipped;
+    }
+
+    public void setUnzipped(boolean unzipped) {
+        this.unzipped = unzipped;
     }
 
     public String getName() {

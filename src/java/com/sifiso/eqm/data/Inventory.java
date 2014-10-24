@@ -41,9 +41,7 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Inventory.findByInventorySerialNo", 
             query = "SELECT i FROM Inventory i WHERE i.inventorySerialNo = :inventorySerialNo"),
     @NamedQuery(name = "Inventory.findByInventoryImage", 
-            query = "SELECT i FROM Inventory i WHERE i.inventoryImage = :inventoryImage"),
-    @NamedQuery(name = "Inventory.findInventoryByUserID",
-            query = "SELECT i FROM Inventory i WHERE i.userinventoryList.user.userID = :userID")})
+            query = "SELECT i FROM Inventory i WHERE i.inventoryImage = :inventoryImage")})
 public class Inventory implements Serializable {
 
     private static final long serialVersionUID = 1L;

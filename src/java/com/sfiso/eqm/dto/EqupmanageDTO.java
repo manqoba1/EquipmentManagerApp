@@ -8,6 +8,7 @@ package com.sfiso.eqm.dto;
 import com.sifiso.eqm.data.Equipment;
 import com.sifiso.eqm.data.Equipmentmanager;
 import com.sifiso.eqm.data.Equpmanage;
+import com.sifiso.eqm.data.Organisation;
 
 /**
  *
@@ -17,11 +18,14 @@ public class EqupmanageDTO {
 
     private Integer equpManageID;
     private int equipmentID;
-    private String equipmentImage, equipmentName, equipmentmanagerName, equipmentmanagerSurname;
-    private int equipmentmanagerID;
+    private long assignedDate;
+    private String equipmentImage, equipmentName, equipmentmanagerName, equipmentmanagerSurname, organisationName;
+
+    private int equipmentmanagerID, organisationID;
 
     public EqupmanageDTO(Equpmanage em) {
         equpManageID = em.getEqupManageID();
+        assignedDate = em.getAssignedDate().getTime();
         Equipment e = em.getEquipment();
         equipmentID = e.getEquipmentID();
         equipmentName = e.getEquipmentName();
@@ -30,6 +34,10 @@ public class EqupmanageDTO {
         equipmentmanagerID = eqm.getEquipmentManagerID();
         equipmentmanagerName = eqm.getEquipmentManagerName();
         equipmentmanagerSurname = eqm.getEquipmentManagerSurname();
+        Organisation o = eqm.getOrganisation();
+        organisationID = o.getOrganisationID();
+        organisationName = o.getOrganisationName();
+
     }
 
     public Integer getEqupManageID() {
@@ -38,6 +46,30 @@ public class EqupmanageDTO {
 
     public void setEqupManageID(Integer equpManageID) {
         this.equpManageID = equpManageID;
+    }
+
+    public String getOrganisationName() {
+        return organisationName;
+    }
+
+    public void setOrganisationName(String organisationName) {
+        this.organisationName = organisationName;
+    }
+
+    public int getOrganisationID() {
+        return organisationID;
+    }
+
+    public void setOrganisationID(int organisationID) {
+        this.organisationID = organisationID;
+    }
+
+    public long getAssignedDate() {
+        return assignedDate;
+    }
+
+    public void setAssignedDate(long assignedDate) {
+        this.assignedDate = assignedDate;
     }
 
     public String getEquipmentImage() {

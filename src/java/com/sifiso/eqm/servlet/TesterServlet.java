@@ -10,11 +10,13 @@ import com.sfiso.eqm.dto.RequestDTO;
 import com.sfiso.eqm.dto.ResponseDTO;
 
 import com.sifiso.eqm.util.DataUtil;
+import com.sifiso.eqm.util.InventoryUtil;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -37,6 +39,9 @@ public class TesterServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    @EJB
+    InventoryUtil inventoryUtil;
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("application/json;charset=UTF-8");
@@ -84,9 +89,9 @@ public class TesterServlet extends HttpServlet {
                     resp = DataUtil.assignDeviceToUser(dto.getUserinventoryDTO());
                     resp.setMessage("Equipment Assigned To User");
                     break;
-                case RequestDTO.GET_EQUIPMENT:
-                    resp = DataUtil.getAllEquipments();
-                    resp.setMessage("Equipments Retriveed");
+                case RequestDTO.AUTHENTICATE_MANAGER:
+                    resp = DataUtil.authenticateManager(dto.getEmail(), dto.getPassword());
+                    resp.setMessage("Login Succesful");
                     break;
                 case RequestDTO.GET_INVENTORY_BY_USER_ID:
                     resp = DataUtil.getInventoryByUserID(dto.getUserID());
@@ -94,6 +99,15 @@ public class TesterServlet extends HttpServlet {
                     break;
                 case RequestDTO.GET_USER_BY_ORGANISATION_ID:
                     resp = DataUtil.getUsersByOrganisationID(dto.getOrganisationID());
+                    resp.setMessage("Equipments Retriveed");
+                    break;
+                case RequestDTO.GET_EQUIPMENT_BY_ID:
+
+                    resp = DataUtil.getEquipmentsByID(dto.getEquipmentID());
+                    resp.setMessage("Equipments Retriveed");
+                    break;
+                case RequestDTO.GET_INVENTORY:
+                    resp = inventoryUtil.getInventoryDTOs();
                     resp.setMessage("Equipments Retriveed");
                     break;
 
@@ -134,6 +148,7 @@ public class TesterServlet extends HttpServlet {
 
         return dto;
     }
+
     private static final Logger LOG = Logger.getLogger(TesterServlet.class.getSimpleName());
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

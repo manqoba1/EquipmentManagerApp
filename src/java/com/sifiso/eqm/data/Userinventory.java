@@ -6,6 +6,7 @@
 package com.sifiso.eqm.data;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,6 +18,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -28,6 +31,8 @@ import javax.validation.constraints.NotNull;
 @NamedQueries({
     @NamedQuery(name = "Userinventory.findAll", query = "SELECT u FROM Userinventory u"),
     @NamedQuery(name = "Userinventory.findByUserInventoryID", query = "SELECT u FROM Userinventory u WHERE u.userInventoryID = :userInventoryID"),
+    @NamedQuery(name = "Userinventory.findByIssuedDate", query = "SELECT u FROM Userinventory u WHERE u.issuedDate = :issuedDate"),
+    @NamedQuery(name = "Userinventory.findByReturnedDate", query = "SELECT u FROM Userinventory u WHERE u.returnedDate = :returnedDate"),
     @NamedQuery(name = "Userinventory.findByReturn1", query = "SELECT u FROM Userinventory u WHERE u.return1 = :return1")})
 public class Userinventory implements Serializable {
 
@@ -37,6 +42,16 @@ public class Userinventory implements Serializable {
     @Basic(optional = false)
     @Column(name = "userInventoryID")
     private Integer userInventoryID;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "issuedDate")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date issuedDate;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "returnedDate")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date returnedDate;
     @Basic(optional = false)
     @NotNull
     @Column(name = "return")
@@ -55,8 +70,10 @@ public class Userinventory implements Serializable {
         this.userInventoryID = userInventoryID;
     }
 
-    public Userinventory(Integer userInventoryID, int return1) {
+    public Userinventory(Integer userInventoryID, Date issuedDate, Date returnedDate, int return1) {
         this.userInventoryID = userInventoryID;
+        this.issuedDate = issuedDate;
+        this.returnedDate = returnedDate;
         this.return1 = return1;
     }
 
@@ -66,6 +83,22 @@ public class Userinventory implements Serializable {
 
     public void setUserInventoryID(Integer userInventoryID) {
         this.userInventoryID = userInventoryID;
+    }
+
+    public Date getIssuedDate() {
+        return issuedDate;
+    }
+
+    public void setIssuedDate(Date issuedDate) {
+        this.issuedDate = issuedDate;
+    }
+
+    public Date getReturnedDate() {
+        return returnedDate;
+    }
+
+    public void setReturnedDate(Date returnedDate) {
+        this.returnedDate = returnedDate;
     }
 
     public int getReturn1() {
@@ -91,6 +124,7 @@ public class Userinventory implements Serializable {
     public void setUser(User user) {
         this.user = user;
     }
+    
 
     @Override
     public int hashCode() {

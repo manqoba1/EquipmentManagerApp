@@ -21,10 +21,11 @@ public class EquipmentmanagerDTO {
     private String equipmentManagerEmail;
     private String equipmentManagerTel;
     private String equipmentManagerAddress, organisationName;
+    private int organisationID;
     private String managerImage;
     private String password;
     private List<EqupmanageDTO> equpmanageList;
-    private int organisationID;
+    
 
     public EquipmentmanagerDTO(Equipmentmanager e) {
         equipmentManagerID = e.getEquipmentManagerID();
